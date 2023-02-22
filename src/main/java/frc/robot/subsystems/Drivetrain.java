@@ -42,7 +42,7 @@ public class Drivetrain extends SubsystemBase {
     rightEncoder = new Encoder(6, 7, true, EncodingType.k4X); //come back to false bit, switch if forward is negative and vise versa
     rightEncoder.setDistancePerPulse( (Math.PI / 3.0) / 2048.0 );
 
-    pdh = new PowerDistribution(10 , ModuleType.kRev);
+    pdh = new PowerDistribution(1 , ModuleType.kRev);//This needs to be CAN 1 so one of the motors will need to be changed to another id temporarily
 
 
   }
