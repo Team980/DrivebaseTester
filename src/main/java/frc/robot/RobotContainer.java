@@ -6,6 +6,7 @@ package frc.robot;
 
 import frc.robot.subsystems.Drivetrain;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -27,8 +28,8 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    drivetrain.setDefaultCommand(new RunCommand(
-      () -> drivetrain.driveRobot(xbox.getLeftY(), xbox.getRightX()), 
+    drivetrain.setDefaultCommand(Commands.run(
+      () -> drivetrain.driveRobot(-xbox.getLeftY(), -xbox.getRightX()), 
       drivetrain
       ));
 
@@ -46,10 +47,10 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-    xbox.x().onTrue(new RunCommand(drivetrain::runLeft, drivetrain));
-    xbox.b().onTrue(new RunCommand(drivetrain::runRight, drivetrain));
-    xbox.y().onTrue(new RunCommand(drivetrain::runBoth, drivetrain));
-    xbox.a().onTrue(new InstantCommand(drivetrain::stop, drivetrain));
+    xbox.x().whileTrue(drivetrain.runConstantSpeed(1));
+    xbox.b().whileTrue(drivetrain.runConstantSpeed(0));
+    xbox.y().whileTrue(drivetrain.runConstantSpeed(2));
+    xbox.a().onTrue(drivetrain.runConstantSpeed(-1));
 
   }
 
